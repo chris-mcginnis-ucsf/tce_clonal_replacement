@@ -1,5 +1,5 @@
 # tce_clonal_replacement
-Companion code for Obenaus*, Poupault*, McGinnis*, et al, 2025. "T cell engagers control solid tumors through IL2-driven effector differentiation of CD8 T-cells"
+Companion code for Obenaus*, Poupault*, McGinnis*, et al, 2025. "Bispecific T cell engagers control solid tumors through clonal replacement and IL2-driven effector differentiation of CD8 T-cells."
 
 All R objects (including Seurat objects) are available for download at synapse (https://www.synapse.org/Synapse:syn70814720)
 
