@@ -213,37 +213,41 @@ load('FIG4_seu_cd4_clean.Robj')
 load('FIG4_cd4_sub_freq.Robj')
 load('FIG4_cd8_sub_freq.Robj')
 load('FIG4_cd8_tex_zscores.Robj')
-load('FIG4_cd8_act_zscores.Robj')
+load('FIG4_cd8_eff_zscores.Robj')
 
 ## Fig. 4B: CD4 and CD8 subtype UMAPs
+# seu_cd4_clean <- SetIdent(seu_cd4_clean, value=seu_cd4_clean$subtype)
+# seu_cd8_clean <- SetIdent(seu_cd8_clean, value=seu_cd8_clean$subtype)
 DimPlot(seu_cd4_clean, cols=c('black','tan4','cadetblue4','dodgerblue','cadetblue2')) + NoLegend() + NoAxes()
 DimPlot(seu_cd8_clean, cols=c('goldenrod','lightcoral','red','tan4','darkred','black')) + NoLegend() + NoAxes()
 
 ## Fig. 4C: CD4 subtype proportion barchart and sample UMAPs
-ggplot(cd4_sub_freq, aes(x=sample, y=freq, fill=subtype)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('cadetblue2','dodgerblue','cadetblue4','tan4','black')) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean@meta.data$sample == 'hbs')], cols.highlight = 'black', sizes.highlight = 0.1) + NoLegend() + NoAxes()
-DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean@meta.data$sample == 'il2')], cols.highlight = 'dodgerblue3', sizes.highlight = 0.1) + NoLegend() + NoAxes()
-DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean@meta.data$sample == 'tce')], cols.highlight = 'orange2', sizes.highlight = 0.1) + NoLegend() + NoAxes()
-DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean@meta.data$sample == 'tce_il2')], cols.highlight = 'orchid4', sizes.highlight = 0.1) + NoLegend() + NoAxes()
+ggplot(cd4_sub_freq, aes(x=sample, y=freq, fill=subtype)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('cadetblue2','dodgerblue','cadetblue4','tan4','black')) + NoLegend() + theme(axis.line = element_line(linewidth = 1), axis.ticks = element_line(linewidth = 1.1), axis.ticks.length = unit(0.35, "cm"))
+DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean$sample == 'hbs')], cols.highlight = 'black', sizes.highlight = 0.1) + NoLegend() + NoAxes()
+DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean$sample == 'il2')], cols.highlight = 'dodgerblue3', sizes.highlight = 0.1) + NoLegend() + NoAxes()
+DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean$sample == 'tce')], cols.highlight = 'orange2', sizes.highlight = 0.1) + NoLegend() + NoAxes()
+DimPlot(seu_cd4_clean, cells.highlight = colnames(seu_cd4_clean)[which(seu_cd4_clean$sample == 'tce_il2')], cols.highlight = 'orchid4', sizes.highlight = 0.1) + NoLegend() + NoAxes()
 
 ## Fig. 4D: CD8 subtype proportion barchart
-ggplot(cd8_sub_freq, aes(x=sample, y=freq, fill=subtype)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('lightcoral','red','tan4','darkred','black','goldenrod')) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+ggplot(cd8_sub_freq, aes(x=sample, y=freq, fill=subtype)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('lightcoral','red','tan4','darkred','black','goldenrod')) + NoLegend() + theme(axis.line = element_line(linewidth = 1), axis.ticks = element_line(linewidth = 1.1), axis.ticks.length = unit(0.35, "cm"))
 
 ## Fig. 4E: Tex z-score heatmap
 Heatmap(cd8_tex_zscores, col = rev(brewer.pal(name='RdBu',n=9)), cluster_rows = F, column_names_gp = gpar(fontsize=8), row_names_gp = gpar(fontsize=8))
 
 ## Fig. 4F: Tex DEG violin plots
-VlnPlot(seu_cd8_clean, 'Tox', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_clean, 'Tigit', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_clean, 'Gzmb', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+# seu_cd8_clean <- SetIdent(seu_cd8_clean, value=seu_cd8_clean$sample_tex)
+VlnPlot(seu_cd8_clean, 'Tox', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_clean, 'Tigit', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_clean, 'Gzmb', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
 
-## Fig. 4G: Activated CD8+ TIL z-score heatmap
-Heatmap(cd8_act_zscores, col = rev(brewer.pal(name='RdBu',n=9)), cluster_rows = F, column_names_gp = gpar(fontsize=8), row_names_gp = gpar(fontsize=8))
+## Fig. 4G: Effector CD8+ TIL z-score heatmap
+Heatmap(cd8_eff_zscores, col = rev(brewer.pal(name='RdBu',n=9)), cluster_rows = F, column_names_gp = gpar(fontsize=8), row_names_gp = gpar(fontsize=8))
 
-## Fig. 4H: Activated CD8+ TIL DEG violin plots
-VlnPlot(seu_cd8_clean, 'Gzmb', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_clean, 'Tnfrsf18', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_clean, 'Tnfrsf9', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+## Fig. 4H: Effector CD8+ TIL DEG violin plots
+# seu_cd8_clean <- SetIdent(seu_cd8_clean, value=seu_cd8_clean$sample_eff)
+VlnPlot(seu_cd8_clean, 'Gzmb', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_clean, 'Tnfrsf18', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_clean, 'Tnfrsf9', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
 
 ##############
 ## Figure 5 ##
@@ -260,14 +264,14 @@ load('FIG5_costim_eff_zscores.Robj')
 load('FIG5_tol_zscores.Robj')
 
 ## Fig. 5A: Sample-level TCR diversity and clone size bar charts
-ggplot(sample_tcr_freq, aes(x=sample, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+ggplot(sample_tcr_freq, aes(x=sample, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(linewidth = 1), axis.ticks = element_line(linewidth = 1.1), axis.ticks.length = unit(0.35, "cm"))
 
 ## Fig. 5B: Subtype clone frequency heatmap and count histogram
 Heatmap(cd8_clone_mat, col = brewer.pal(name='Reds',n=9), show_row_names = F)
 ggplot(clone_counts_df, aes(x=clone, y=log2(ncell))) + geom_col(fill='black',color='black') + theme_classic() + theme(axis.text.x = element_blank())
 
 ## Fig. 5C: CD8+ TIL UMAP w/ subtypes and clone sizes
-DimPlot(seu_cd8_tcr, cols=c('goldenrod','black','darkred','tan4','red','lightcoral'), group.by = 'subtype') + NoLegend() + NoAxes() + theme(plot.title = element_blank())
+DimPlot(seu_cd8_tcr, group.by = 'subtype', cols=c('goldenrod','black','darkred','tan4','red','lightcoral')) + NoLegend() + NoAxes() + theme(plot.title = element_blank())
 DimPlot(seu_cd8_tcr, group.by = 'cloneSize', cols=c('darkred','maroon','lightcoral','red')) + NoLegend() + NoAxes() + theme(plot.title = element_blank())
 
 ## Fig. 5D: Subsetted CD8+ TIL UMAP w/ subtypes, clone sizes, and treatment group projections
@@ -279,20 +283,21 @@ DimPlot(seu_cd8_tcr_sub, cells.highlight = colnames(seu_cd8_tcr_sub)[which(seu_c
 DimPlot(seu_cd8_tcr_sub, cells.highlight = colnames(seu_cd8_tcr_sub)[which(seu_cd8_tcr_sub@meta.data$sample == 'tce_il2')], cols.highlight = 'orchid4', sizes.highlight = 0.1) + NoLegend() + NoAxes()
 
 ## Fig. 5E: CD8 subtype clone size barchart
-ggplot(subtype_cd8_tcr_freq[grep('cd8_act', subtype_cd8_tcr_freq$subtype), ], aes(x=subtype, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-ggplot(subtype_cd8_tcr_freq[grep('prolif', subtype_cd8_tcr_freq$subtype), ], aes(x=subtype, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-ggplot(subtype_cd8_tcr_freq[grep('tex_[h|i|t|]', subtype_cd8_tcr_freq$subtype), ], aes(x=subtype, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+ggplot(subtype_cd8_tcr_freq[grep('cd8_act', subtype_cd8_tcr_freq$subtype), ], aes(x=subtype, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(linewidth = 1), axis.ticks = element_line(linewidth = 1.1), axis.ticks.length = unit(0.35, "cm"))
+ggplot(subtype_cd8_tcr_freq[grep('prolif', subtype_cd8_tcr_freq$subtype), ], aes(x=subtype, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(linewidth = 1), axis.ticks = element_line(linewidth = 1.1), axis.ticks.length = unit(0.35, "cm"))
+ggplot(subtype_cd8_tcr_freq[grep('tex_[h|i|t|]', subtype_cd8_tcr_freq$subtype), ], aes(x=subtype, y=freq, fill=cloneSize)) + geom_col(color='black') + theme_classic() + scale_fill_manual(values=c('darkred','maroon','red','lightcoral')) + NoLegend() + theme(axis.line = element_line(linewidth = 1), axis.ticks = element_line(linewidth = 1.1), axis.ticks.length = unit(0.35, "cm"))
 
 ## Figure 5F: Tex-prolif expanded vs diverse marker gene z-score heatmap
 Heatmap(tex_prolif_zscores, col = rev(brewer.pal(name='RdBu',n=9)), cluster_rows = F, column_names_gp = gpar(fontsize=8), row_names_gp = gpar(fontsize=8))
 
 ## Figure 5G: Tex-prolif expanded vs diverse marker gene violin plots
-VlnPlot(seu_cd8_tcr_sub, 'Tox', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_tcr_sub, 'Id2', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_tcr_sub, 'Pdcd1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_tcr_sub, 'Pim1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_tcr_sub, 'Cd69', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
-VlnPlot(seu_cd8_tcr_sub, 'Nfkb1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+# seu_cd8_tcr_sub <- SetIdent(seu_cd8_tcr_sub, value=seu_cd8_tcr_sub$sample_tex_prolif)
+VlnPlot(seu_cd8_tcr_sub, 'Tox', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_tcr_sub, 'Id2', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_tcr_sub, 'Pdcd1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_tcr_sub, 'Pim1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_tcr_sub, 'Cd69', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
+VlnPlot(seu_cd8_tcr_sub, 'Nfkb1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + theme_void() + NoLegend() + theme(plot.title = element_blank(), axis.line = element_line(linewidth = 1.5), axis.ticks = element_line(linewidth = 1.5), axis.ticks.length = unit(0.35, "cm"))
 
 ## Figure 5I: Clonally-diverse CD8 TIL glycolysis, effector/co-stim, and tolerance marker z-score heatmaps
 Heatmap(gly_zscores, col = rev(brewer.pal(name='RdBu',n=9)), cluster_rows = F, column_names_gp = gpar(fontsize=8), row_names_gp = gpar(fontsize=8))
@@ -514,10 +519,14 @@ ggplot(cd4_cd8_freq, aes(x=sample, y=freq, fill=cd4cd8)) + geom_col(color='black
 ggplot(cd8_sub_freq[which(cd8_sub_freq$subtype %in% c('cd8_tex','cd8_act') & cd8_sub_freq$sample != 'tce'), ], aes(x=subtype, y=freq, fill=sample)) + geom_col(color='black', position=position_dodge()) + theme_classic() + scale_fill_manual(values=alpha(c('black','dodgerblue3','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
 
 ## Fig. S5D: Glycolysis gene score violin plot
-VlnPlot(seu_cd8_clean, 'glycolysis1', idents = c('hbs','il2','tce','tce_il2'), pt.size = 0, cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() + theme(axis.line = element_line(size=0.5), axis.ticks = element_line(size=0.75), axis.ticks.length=unit(.2, "cm"))
+# seu_cd8_clean <- SetIdent(seu_cd8_clean, value=seu_cd8_clean$sample_eff)
+VlnPlot(seu_cd8_clean, 'glycolysis1', pt.size = 0, idents = c('hbs','il2','tce','tce_il2'), cols=alpha(c('black','dodgerblue3','orange2','orchid4'),0.8)) + NoLegend() 
 
 ## Fig. S5E: Cxcr6 expression across CD8 TIL subtypes
-VlnPlot(seu_cd8_clean, 'Cxcr6', pt.size = 0, cols=c('lightcoral','red','maroon','darkred')) + NoLegend() + theme(plot.title = element_blank(), axis.text = element_blank(), axis.title = element_blank(), axis.text.x = element_blank()) 
+# seu_cd8_clean <- SetIdent(seu_cd8_clean, value=seu_cd8_clean$subtype)
+VlnPlot(seu_cd8_clean, 'Cxcr6', pt.size = 0, cols=c('darkred','goldenrod','red','black','tan4','lightcoral'), sort=T) + NoLegend() + theme(plot.title = element_blank(), axis.text = element_blank(), axis.title = element_blank(), axis.text.x = element_blank()) 
 
 ## Fig. S5F: Cxcr6 expression across Tex prolif clonality bins
+# seu_cd8_tcr_sub <- SetIdent(seu_cd8_tcr_sub, value=seu_cd8_tcr_sub$subtype_cloneSize)
 VlnPlot(seu_cd8_tcr_sub, idents=c('cd8_tex_prolif_rare','cd8_tex_prolif_small','cd8_tex_prolif_medium','cd8_tex_prolif_large'), 'Cxcr6', pt.size = 0, cols=c('lightcoral','red','maroon','darkred')) + NoLegend() + theme(plot.title = element_blank(), axis.text = element_blank(), axis.title = element_blank(), axis.text.x = element_blank()) 
+
